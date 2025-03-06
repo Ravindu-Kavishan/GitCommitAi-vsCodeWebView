@@ -23,10 +23,10 @@ export default function Register() {
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-80 h-fit rounded-xl p-4 shadow-lg">
-        <ContentImage welcomeImage={registerImage} title="Register" />
+        <ContentImage image={registerImage} title="Register" />
         <div className="flex justify-center">
           <form className="w-full my-4">
-            {/* User Name Input */}
+
             <InputField
               placeholder="User Name"
               value={newUser.userName}
@@ -36,7 +36,7 @@ export default function Register() {
               icon={userimg}
             />
 
-            {/* Email Input */}
+
             <InputField
               placeholder="Email"
               value={newUser.email}
@@ -46,7 +46,7 @@ export default function Register() {
               icon={emailimg}
             />
 
-            {/* Password Input */}
+
             <InputField
               placeholder="Password"
               value={newUser.password}
@@ -68,7 +68,6 @@ export default function Register() {
               isPassword={true}
             />
 
-            {/* Register Button */}
             <Button
               text="Register"
               color="#710AF1"

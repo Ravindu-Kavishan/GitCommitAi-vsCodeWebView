@@ -3,44 +3,39 @@ import loginImage from "../../images/login.png";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import userimg from "../../images/user.png";
 import passwordimg from "../../images/password.png";
 import { useNavigate } from "react-router";
 
-export default function LogIn() {
+export default function ChangePassword() {
   const navigate = useNavigate();
-  const [User, setUser] = useState({
-    userName: "",
-    password: "",
-  });
+  const [passwords, setpasswords] = useState({password:"",confirmPassword:""});
 
-  function loginClicked(e) {
+  function submitClicked(e) {
     e.preventDefault();
-    console.log(User);
-  }
-  function fpclicked(e) {
-    e.preventDefault();
-    navigate("/forgetpassword");
+    console.log(passwords);
+    navigate("/OTP");
   }
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-72 h-fit rounded-xl p-4 shadow-lg">
-        <ContentImage image={loginImage} title="LogIn" />
+        <ContentImage image={loginImage} title="Change Password" />
         <div className="flex justify-center">
           <form className="w-full my-2">
             <InputField
-              placeholder="User Name"
-              value={User.userName}
+              placeholder="Password"
+              value={passwords.password}
               onChange={(e) =>
-                setUser({ ...User, userName: e.target.value })
+                setpasswords({ ...passwords, password: e.target.value })
               }
-              icon={userimg}
+              icon={passwordimg}
+              type="password"
+              isPassword={true}
             />
             <InputField
-              placeholder="Password"
-              value={User.password}
+              placeholder="Confirm Password"
+              value={passwords.confirmPassword}
               onChange={(e) =>
-                setUser({ ...User, password: e.target.value })
+                setpasswords({ ...passwords, confirmPassword: e.target.value })
               }
               icon={passwordimg}
               type="password"
@@ -48,17 +43,10 @@ export default function LogIn() {
             />
 
             <Button
-              text="Register"
+              text="send OTP"
               color="#710AF1"
               tcolor="#D4B7FA"
-              onClick={loginClicked}
-            />
-
-            <Button
-              text="Forget Password?"
-              color="#D4B7FA"
-              tcolor="#710AF1"
-              onClick={fpclicked}
+              onClick={submitClicked}
             />
           </form>
         </div>

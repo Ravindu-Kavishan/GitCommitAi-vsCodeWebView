@@ -14,14 +14,14 @@ export default function InputField({
 
   return (
     <div className="flex justify-center">
-      <div className="rounded-4xl bg-[#D4B7FA] w-11/12 flex items-center px-3 mb-2 py-1">
+      <div className="rounded-4xl bg-[#D4B7FA] w-11/12 flex items-center px-3 mb-2 py-1 border-2 border-transparent hover:border-black transition duration-300">
         <img src={icon} className="w-4 mr-2 self-center" />
         <input
           type={isPassword ? (showPassword ? "text" : "password") : type}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="bg-transparent outline-none placeholder-[#7315E7] text-[#7315E7] w-full text-sm"
+          className="bg-transparent outline-none placeholder-[#7315E7] text-[#7315E7] w-full text-sm "
         />
         {isPassword && (
           <img
