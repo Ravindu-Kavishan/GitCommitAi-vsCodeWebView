@@ -1,9 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
+import registerImage from "../../images/register.png";
+import ContentImage from "../../components/ContentImage";
+import Button from "../../components/Button";
+import InputField from "../../components/InputField";
+import emailimg from "../../images/email.png";
+import userimg from "../../images/user.png";
+import passwordimg from "../../images/password.png";
 
 export default function Register() {
+  const [newUser, setNewUser] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    Confirmpassword:""
+  });
+
+  function registerClicked(e) {
+    e.preventDefault();
+    console.log(newUser);
+  }
+
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
+      <div className="bg-white w-80 h-fit rounded-xl p-4 shadow-lg">
+        <ContentImage welcomeImage={registerImage} title="Register" />
+        <div className="flex justify-center">
+          <form className="w-full my-4">
+            {/* User Name Input */}
+            <InputField
+              placeholder="User Name"
+              value={newUser.userName}
+              onChange={(e) =>
+                setNewUser({ ...newUser, userName: e.target.value })
+              }
+              icon={userimg}
+            />
 
+            {/* Email Input */}
+            <InputField
+              placeholder="Email"
+              value={newUser.email}
+              onChange={(e) =>
+                setNewUser({ ...newUser, email: e.target.value })
+              }
+              icon={emailimg}
+            />
+
+            {/* Password Input */}
+            <InputField
+              placeholder="Password"
+              value={newUser.password}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password: e.target.value })
+              }
+              icon={passwordimg}
+              type="password"
+              isPassword={true}
+            />
+            <InputField
+              placeholder="Confirm Password"
+              value={newUser.Confirmpassword}
+              onChange={(e) =>
+                setNewUser({ ...newUser, Confirmpassword: e.target.value })
+              }
+              icon={passwordimg}
+              type="password"
+              isPassword={true}
+            />
+
+            {/* Register Button */}
+            <Button
+              text="Register"
+              color="#710AF1"
+              tcolor="#D4B7FA"
+              onClick={registerClicked}
+            />
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
