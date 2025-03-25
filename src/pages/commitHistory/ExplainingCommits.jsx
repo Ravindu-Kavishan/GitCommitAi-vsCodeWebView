@@ -5,7 +5,7 @@ import SideBar from "../../components/SideBar";
 export default function ExplainingCommits() {
   // Accessing the state passed from the previous page
   const location = useLocation();
-  const { commitidx, projectidx, project, commit } = location.state || {};
+  const { commitidx, projectidx,  project_name, commit_message,git_diff } = location.state || {};
   const explanations = [
     "sentense1",
     "sentense2",
