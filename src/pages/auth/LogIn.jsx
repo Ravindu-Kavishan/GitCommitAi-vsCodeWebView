@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import loginImage from "../../images/login.png";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
@@ -10,15 +11,30 @@ import { useNavigate } from "react-router";
 export default function LogIn() {
   const navigate = useNavigate();
   const [User, setUser] = useState({
-    userName: "",
+    username: "",
     password: "",
   });
-
   function loginClicked(e) {
     e.preventDefault();
-    console.log(User);
-    navigate("/CommitHistory");
-  }
+
+    axios
+      .post("http://localhost:8000/login", User, { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          // Navigate to CommitHistory on successful login
+          navigate("/CommitHistory");
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "Login failed:",
+          error.response?.data?.detail || error.message
+        );
+        alert("Login failed. Please check your credentials.");
+      });
+    }
+  
+
   function fpclicked(e) {
     e.preventDefault();
     navigate("/forgetpassword");
@@ -31,8 +47,8 @@ export default function LogIn() {
           <form className="w-full my-2">
             <InputField
               placeholder="User Name"
-              value={User.userName}
-              onChange={(e) => setUser({ ...User, userName: e.target.value })}
+              value={User.username}
+              onChange={(e) => setUser({ ...User, username: e.target.value })}
               icon={userimg}
             />
             <InputField
