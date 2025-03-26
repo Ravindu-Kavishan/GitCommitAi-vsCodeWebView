@@ -3,6 +3,7 @@ import SideBar from "../../../components/SideBar";
 import { Form, useNavigate } from "react-router";
 import Button from "../../../components/Button";
 import deleteIcon from "../../../images/delete.svg";
+import { BackendURL } from "../../../utils/utils";
 
 export default function AddProjects() {
   const [inputs, setInputs] = useState({ rule: "", user: "" });
@@ -59,7 +60,7 @@ export default function AddProjects() {
     //   e.preventDefault();  // Prevents page refresh
     //   setForm({ projectName: projectName, rules: rules, users: users });
     console.log({ projectName, rules, users });
-    fetch("http://localhost:8000/add_project", {
+    fetch(`${BackendURL}/add_project`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

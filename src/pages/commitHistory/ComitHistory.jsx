@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import SideBar from "../../components/SideBar";
 import arrow from "../../images/arrow.svg";
 import { useNavigate } from "react-router";
-
+import { BackendURL } from "../../utils/utils";
 export default function CommitHistory() {
   const [arr, setArr] = useState([]);
   const [expandedProject, setExpandedProject] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/get_projects_and_commits", {
+    fetch(`${BackendURL}/get_projects_and_commits`, {
       method: "GET",
       credentials: "include", // Important for cookies
     })
@@ -32,9 +32,15 @@ export default function CommitHistory() {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
-  function expandClicked(commitidx, projectidx, project_name, commit_message,git_diff) {
+  function expandClicked(
+    commitidx,
+    projectidx,
+    project_name,
+    commit_message,
+    git_diff
+  ) {
     navigate("/ExplainingCommits", {
-      state: { commitidx, projectidx, project_name, commit_message,git_diff },
+      state: { commitidx, projectidx, project_name, commit_message, git_diff },
     });
   }
 

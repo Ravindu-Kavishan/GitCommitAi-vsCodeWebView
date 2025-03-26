@@ -4,6 +4,7 @@ import arrow from "../../../images/arrow.svg";
 import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
 import Button from "../../../components/Button";
+import { BackendURL } from "../../../utils/utils";
 
 export default function ProjectRules() {
   const [arr, setArr] = useState([]);
@@ -16,9 +17,9 @@ export default function ProjectRules() {
 
   useEffect(() => {
     if (admin) {
-      setUri("http://localhost:8000/admin/get_projects_and_rules");
+      setUri(`${BackendURL}/admin/get_projects_and_rules`);
     } else {
-      setUri("http://localhost:8000/get_projects_and_rules");
+      setUri(`${BackendURL}/get_projects_and_rules`);
     }
   }, []); // Dependency array ensures uri is updated when 'admin' changes
 
@@ -62,7 +63,7 @@ export default function ProjectRules() {
 
   function deleteProjectClicked(project_name) {
     console.log(project_name);
-    fetch("http://localhost:8000/delete_project", {
+    fetch(`${BackendURL}/delete_project`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +81,7 @@ export default function ProjectRules() {
   }
 
   function deleteRuleClicked(projectName, rule) {
-    fetch("http://localhost:8000/delete_rule", {
+    fetch(`${BackendURL}/delete_rule`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ export default function ProjectRules() {
     navigate("/AddProjects");
   }
   function addRuleClicked(projectName, rule) {
-    fetch("http://localhost:8000/add_rule", {
+    fetch(`${BackendURL}/add_rule`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

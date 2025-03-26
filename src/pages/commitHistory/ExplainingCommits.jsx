@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SideBar from "../../components/SideBar";
+import { BackendURL } from "../../utils/utils";
 
 export default function ExplainingCommits() {
   const location = useLocation();
@@ -11,7 +12,7 @@ export default function ExplainingCommits() {
   useEffect(() => {
     async function fetchExplanation() {
       try {
-        const response = await fetch("http://localhost:8000/generate_commit_review", {
+        const response = await fetch(`${BackendURL}/generate_commit_review`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import arrow from "../../../images/arrow.svg";
 import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
 import Button from "../../../components/Button";
+import { BackendURL } from "../../../utils/utils";
 
 export default function Projectuserss() {
   const [arr, setArr] = useState([]);
@@ -13,7 +14,7 @@ export default function Projectuserss() {
   const [useremail, setUseremail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/get_projects_and_users", {
+    fetch(`${BackendURL}/get_projects_and_users`, {
       method: "GET",
       credentials: "include", // Important for sending cookies with the request
     })
@@ -50,7 +51,7 @@ export default function Projectuserss() {
 
   function deleteProjectClicked(project_name) {
     console.log(project_name);
-    fetch("http://localhost:8000/delete_project", {
+    fetch(`${BackendURL}/delete_project`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export default function Projectuserss() {
       alert("Please enter a valid email address.");
       return;
     }
-    fetch("http://localhost:8000/add_user", {
+    fetch(`${BackendURL}/add_user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +103,7 @@ export default function Projectuserss() {
   }
 
   function deleteUserClicked(projectName, user) {
-    fetch("http://localhost:8000/delete_user", {
+    fetch(`${BackendURL}/delete_user`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
