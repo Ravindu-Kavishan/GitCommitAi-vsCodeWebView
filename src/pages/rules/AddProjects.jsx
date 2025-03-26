@@ -9,11 +9,11 @@ export default function AddProjects() {
   const [projectName, setProjectName] = useState("");
   const [rules, setRules] = useState([""]);
   const [users, setUsers] = useState([""]);
-  const [form,setForm]=useState({projectName:"",rules:[],users:[]})
+  const [form, setForm] = useState({ projectName: "", rules: [], users: [] });
 
   function addRulesclicked(id) {
     setRules((prevRules) =>
-      prevRules.map((r, idx) => (idx === id ? inputs.rule: r))
+      prevRules.map((r, idx) => (idx === id ? inputs.rule : r))
     );
     setRules((prevRules) => [...prevRules, ""]);
     setInputs((prev) => ({
@@ -22,24 +22,68 @@ export default function AddProjects() {
     }));
   }
 
-  function addUserclicked(id){
+  function addUserclicked(id) {
     setUsers((prevUsers) =>
-        prevUsers.map((u, idx) => (idx === id ? inputs.user: u))
-      );
-      setUsers((prevUsers) => [...prevUsers, ""]);
-      setInputs((prev) => ({
-        ...prev,
-        user: "",
-      }));
+      prevUsers.map((u, idx) => (idx === id ? inputs.user : u))
+    );
+    setUsers((prevUsers) => [...prevUsers, ""]);
+    setInputs((prev) => ({
+      ...prev,
+      user: "",
+    }));
   }
   function deleteClick(id, setfunc) {
     setfunc((prevValue) => prevValue.filter((_, idx) => idx !== id));
   }
 
-  function SubmitFunction(e) {
-      e.preventDefault();  // Prevents page refresh
-      setForm({ projectName: projectName, rules: rules, users: users });
-      console.log({ projectName, rules, users });
+  function isValidEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  }
+  function addUserclicked(id) {
+    if (!isValidEmail(inputs.user)) {
+      console.error("Invalid email address");
+      alert("Please enter a valid email address.");
+      return; // Prevent adding if invalid email
+    }
+    setUsers((prevUsers) =>
+      prevUsers.map((u, idx) => (idx === id ? inputs.user : u))
+    );
+    setUsers((prevUsers) => [...prevUsers, ""]);
+    setInputs((prev) => ({
+      ...prev,
+      user: "",
+    }));
+  }
+  function SubmitFunction() {
+    //   e.preventDefault();  // Prevents page refresh
+    //   setForm({ projectName: projectName, rules: rules, users: users });
+    console.log({ projectName, rules, users });
+    fetch("http://localhost:8000/add_project", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        rules: rules.slice(0, -1), // Correct slicing
+        users: users.slice(0, -1), // Correct slicing
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add project.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Project added successfully:", data);
+        // Optionally, update your state to reflect the new data
+        setProjectName("");
+        setRules([""]);
+        setUsers([""]);
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -62,7 +106,9 @@ export default function AddProjects() {
                 type="text"
                 placeholder="Project Name"
                 value={projectName}
-                onChange={(e)=>{setProjectName(e.target.value)}}
+                onChange={(e) => {
+                  setProjectName(e.target.value);
+                }}
                 className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
               />
             </div>
@@ -160,7 +206,12 @@ export default function AddProjects() {
               </div>
             </div>
           ))}
-          <Button text="save" color="#710AF1" tcolor="black" onClick={SubmitFunction}/>
+          <Button
+            text="save"
+            color="#710AF1"
+            tcolor="black"
+            onClick={SubmitFunction}
+          />
           {/* </form> */}
         </div>
       </div>

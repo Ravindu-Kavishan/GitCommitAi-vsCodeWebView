@@ -27,7 +27,7 @@ export default function LogIn() {
           }else{
             localStorage.setItem("admin", false);
           }
-          navigate("/CommitHistory");
+          navigate("/ProjectsRules");
         }
       })
       .catch((error) => {

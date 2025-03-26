@@ -12,8 +12,20 @@ export default function ProjectRules() {
   const admin = localStorage.getItem("admin") === "true";
   const [rule, setRule] = useState("");
 
+  const [uri, setUri] = useState("");
+
   useEffect(() => {
-    fetch("http://localhost:8000/get_projects_and_rules", {
+    if (admin) {
+      setUri("http://localhost:8000/admin/get_projects_and_rules");
+    } else {
+      setUri("http://localhost:8000/get_projects_and_rules");
+    }
+  }, []); // Dependency array ensures uri is updated when 'admin' changes
+
+  useEffect(() => {
+    if (!uri) return; // Prevent fetch if URI is not set yet
+
+    fetch(uri, {
       method: "GET",
       credentials: "include", // Important for sending cookies with the request
     })
@@ -42,7 +54,7 @@ export default function ProjectRules() {
           error.message || "Failed to load project data. Please log in again."
         );
       });
-  }, []);
+  }, [uri]); // Re-run the effect when the 'uri' changes
 
   function handleArrowClick(projectidx) {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
@@ -108,7 +120,7 @@ export default function ProjectRules() {
         }
         return response.json();
       })
-        .then(() => window.location.reload())
+      .then(() => window.location.reload())
       .catch((err) => console.error(err));
   }
 

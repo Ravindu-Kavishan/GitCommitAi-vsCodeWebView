@@ -5,15 +5,15 @@ import deleteicon from "../../images/delete.svg";
 import { useNavigate } from "react-router";
 import Button from "../../components/Button";
 
-export default function ProjectRules() {
+export default function Projectuserss() {
   const [arr, setArr] = useState([]);
   const [expandedProject, setExpandedProject] = useState(null);
   const navigate = useNavigate();
   const admin = localStorage.getItem("admin") === "true";
-  const [user, setUser] = useState("");
+  const [useremail, setUseremail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/get_projects_and_rules", {
+    fetch("http://localhost:8000/get_projects_and_users", {
       method: "GET",
       credentials: "include", // Important for sending cookies with the request
     })
@@ -48,18 +48,78 @@ export default function ProjectRules() {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
-  function deleteClicked(ruleidx, projectidx) {
-    navigate("/ExplainingCommits", {
-      state: { commitidx, projectidx, project_name, commit_message, git_diff },
-    });
+  function deleteProjectClicked(project_name) {
+    console.log(project_name);
+    fetch("http://localhost:8000/delete_project", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ project_name: project_name }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete project.");
+        }
+        return response.json();
+      })
+      .then(() => window.location.reload()) // Corrected the reload method
+      .catch((err) => console.error(err));
   }
 
   function addProjectclicked() {
     navigate("/AddProjects");
   }
 
-  function addUserClicked() {
-    console.log(user);
+  function isValidEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  }
+  function addUserClicked(projectName, user) {
+    if (!isValidEmail(useremail)) {
+      console.error("Invalid email address");
+      alert("Please enter a valid email address.");
+      return;
+    }
+    fetch("http://localhost:8000/add_user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        user: user,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add user.");
+        }
+        return response.json();
+      })
+      .then(() => window.location.reload())
+      .catch((err) => console.error(err));
+  }
+
+  function deleteUserClicked(projectName, user) {
+    fetch("http://localhost:8000/delete_user", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        user: user,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete user.");
+        }
+        return response.json();
+      })
+      .then(() => window.location.reload()) // Refreshes page after successful deletion
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -91,7 +151,9 @@ export default function ProjectRules() {
                       <img
                         src={deleteicon}
                         alt="delete"
-                        onClick={() => deleteClicked(ruleidx, projectidx)}
+                        onClick={() =>
+                          deleteProjectClicked(project.project_name)
+                        }
                         className="cursor-pointer w-6 h-6 mr-5"
                       />
                     )}
@@ -107,23 +169,23 @@ export default function ProjectRules() {
                     <div className="w-full mt-4">
                       <hr className="border-t-2 border-[#710AF1]" />
                       <div className="p-4 rounded-lg shadow-lg">
-                        {project.rules.map((rule, ruleidx) => (
+                        {project.users.map((users, usersidx) => (
                           <div
                             className="flex bg-white p-4 m-2 rounded-lg justify-between items-center shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out"
-                            key={ruleidx}
+                            key={usersidx}
                           >
                             <div className="flex items-center">
                               <h1 className="mr-4 text-lg font-semibold text-gray-600">
-                                {ruleidx + 1}
+                                {usersidx + 1}
                               </h1>
-                              <h1 className="text-lg text-gray-700">{rule}</h1>
+                              <h1 className="text-lg text-gray-700">{users}</h1>
                             </div>
                             {admin && (
                               <img
                                 src={deleteicon}
                                 alt="delete"
                                 onClick={() =>
-                                  deleteClicked(ruleidx, projectidx)
+                                    deleteUserClicked(project.project_name, users)
                                 }
                                 className="cursor-pointer w-6 h-6"
                               />
@@ -137,17 +199,17 @@ export default function ProjectRules() {
                           <div className="flex items-center justify-center w-full">
                             <input
                               type="text"
-                              placeholder="Type Rule"
-                              value={user}
+                              placeholder="Type users"
+                              value={useremail}
                               onChange={(e) => {
-                                setUser(e.target.value);
+                                setUseremail(e.target.value);
                               }}
                               className="w-1/2 text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
                             />
                           </div>
                           <button
                             className="px-4 py-2 bg-white  text-blue-500 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-                            onClick={addUserClicked}
+                            onClick={()=>{addUserClicked(project.project_name,useremail)}}
                           >
                             ADD
                           </button>

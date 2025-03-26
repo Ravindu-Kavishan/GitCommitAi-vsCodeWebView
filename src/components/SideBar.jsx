@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function SideBar() {
   const admin = localStorage.getItem("admin") === "true";
+
   return (
     <div className="w-fit mt-10">
       <h2>
@@ -25,19 +26,7 @@ export default function SideBar() {
           Your Projects
         </NavLink>
       </h2>
-
-      {admin === "true" ? (
-        <h2>
-          <NavLink
-            to="/CommitHistory"
-            className={({ isActive }) =>
-              isActive ? "text-black underline" : "text-white text-lg"
-            }
-          >
-            Commit History
-          </NavLink>
-        </h2>
-      ) : (
+      {admin ? (
         <h2>
           <NavLink
             to="/AddUsers"
@@ -46,6 +35,17 @@ export default function SideBar() {
             }
           >
             Add Users
+          </NavLink>
+        </h2>
+      ) : (
+        <h2>
+          <NavLink
+            to="/CommitHistory"
+            className={({ isActive }) =>
+              isActive ? "text-black underline" : "text-white text-lg"
+            }
+          >
+            Commit History
           </NavLink>
         </h2>
       )}
