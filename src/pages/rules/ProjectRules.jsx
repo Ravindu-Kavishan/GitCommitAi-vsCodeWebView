@@ -48,18 +48,74 @@ export default function ProjectRules() {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
-  function deleteClicked(ruleidx, projectidx) {
-    navigate("/ExplainingCommits", {
-      state: { commitidx, projectidx, project_name, commit_message, git_diff },
-    });
+  function deleteProjectClicked(project_name) {
+    console.log(project_name);
+    fetch("http://localhost:8000/delete_project", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ project_name: project_name }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete project.");
+        }
+        return response.json();
+      })
+      .then(() => window.location.reload()) // Corrected the reload method
+      .catch((err) => console.error(err));
+  }
+
+  function deleteRuleClicked(projectName, rule) {
+    fetch("http://localhost:8000/delete_rule", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        rule: rule,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete rule.");
+        }
+        return response.json();
+      })
+      .then(() => window.location.reload()) // Refreshes page after successful deletion
+      .catch((err) => console.error(err));
   }
 
   function addProjectclicked() {
     navigate("/AddProjects");
   }
-  function addRuleClicked() {
-    console.log(rule);
+  function addRuleClicked(projectName, rule) {
+    fetch("http://localhost:8000/add_rule", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        rule: rule,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add rule.");
+        }
+        return response.json();
+      })
+        .then(() => window.location.reload())
+      .catch((err) => console.error(err));
   }
+
+  // function addRuleClicked(projectName, rule) {
+  // console.log(projectName)
+  // console.log(rule)
+  // }
   return (
     <div className="flex w-full min-h-screen">
       <div className="w-1/6 bg-gradient-to-br from-[#69A2AD] to-[#7315E7] border-r-3 border-[#858585] flex justify-center">
@@ -91,7 +147,9 @@ export default function ProjectRules() {
                       <img
                         src={deleteicon}
                         alt="delete"
-                        onClick={() => deleteClicked(ruleidx, projectidx)}
+                        onClick={() =>
+                          deleteProjectClicked(project.project_name)
+                        }
                         className="cursor-pointer w-6 h-6 mr-5"
                       />
                     )}
@@ -123,7 +181,7 @@ export default function ProjectRules() {
                                 src={deleteicon}
                                 alt="delete"
                                 onClick={() =>
-                                  deleteClicked(ruleidx, projectidx)
+                                  deleteRuleClicked(project.project_name, rule)
                                 }
                                 className="cursor-pointer w-6 h-6"
                               />
@@ -147,7 +205,9 @@ export default function ProjectRules() {
                           </div>
                           <button
                             className="px-4 py-2 bg-white  text-blue-500 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-                            onClick={addRuleClicked}
+                            onClick={() => {
+                              addRuleClicked(project.project_name, rule);
+                            }}
                           >
                             ADD
                           </button>
