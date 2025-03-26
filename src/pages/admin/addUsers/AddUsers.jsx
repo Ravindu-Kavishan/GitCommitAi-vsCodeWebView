@@ -5,6 +5,7 @@ import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
 import Button from "../../../components/Button";
 import { BackendURL } from "../../../utils/utils";
+import ErrorAllert from "../../../components/ErrorAllert";
 
 export default function Projectuserss() {
   const [arr, setArr] = useState([]);
@@ -12,22 +13,26 @@ export default function Projectuserss() {
   const navigate = useNavigate();
   const admin = localStorage.getItem("admin") === "true";
   const [useremail, setUseremail] = useState("");
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     fetch(`${BackendURL}/get_projects_and_users`, {
       method: "GET",
-      credentials: "include", // Important for sending cookies with the request
+      credentials: "include", // Important for cookies
     })
       .then(async (response) => {
         if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error("Unauthorized: Please log in.");
-          } else if (response.status === 404) {
-            throw new Error("No projects found.");
-          } else if (response.status === 500) {
-            throw new Error("Server error. Try again later.");
-          }
-          throw new Error(`Error: ${response.status}`);
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage =
+            errorData?.message ||
+            (response.status === 401
+              ? "Unauthorized: Please log in."
+              : response.status === 404
+              ? "No projects found."
+              : response.status === 500
+              ? "Server error. Try again later."
+              : `Error: ${response.status}`);
+          throw new Error(errorMessage);
         }
         return response.json();
       })
@@ -38,10 +43,7 @@ export default function Projectuserss() {
         setArr(data.projects);
       })
       .catch((error) => {
-        console.error("Error fetching projects and commits:", error);
-        alert(
-          error.message || "Failed to load project data. Please log in again."
-        );
+        setErr(error.message);
       });
   }, []);
 
@@ -58,14 +60,17 @@ export default function Projectuserss() {
       },
       body: JSON.stringify({ project_name: project_name }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete project.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload()) // Corrected the reload method
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.message));
   }
 
   function addProjectclicked() {
@@ -78,8 +83,7 @@ export default function Projectuserss() {
   }
   function addUserClicked(projectName, user) {
     if (!isValidEmail(useremail)) {
-      console.error("Invalid email address");
-      alert("Please enter a valid email address.");
+      setErr("Please enter a valid email address.");
       return;
     }
     fetch(`${BackendURL}/add_user`, {
@@ -92,14 +96,16 @@ export default function Projectuserss() {
         user: user,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to add user.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload())
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.message));
   }
 
   function deleteUserClicked(projectName, user) {
@@ -113,14 +119,16 @@ export default function Projectuserss() {
         user: user,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete user.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload()) // Refreshes page after successful deletion
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.errorMessage));
   }
 
   return (
@@ -133,6 +141,11 @@ export default function Projectuserss() {
           <div className="flex justify-center mb-6">
             <h2 className="text-white text-3xl font-semibold">Add Users</h2>
           </div>
+          {err && (
+            <div>
+              <ErrorAllert message={err} />
+            </div>
+          )}
 
           {arr.length === 0 ? (
             <p className="text-white text-center">Loading projects...</p>

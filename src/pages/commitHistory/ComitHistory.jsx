@@ -3,19 +3,25 @@ import SideBar from "../../components/SideBar";
 import arrow from "../../images/arrow.svg";
 import { useNavigate } from "react-router";
 import { BackendURL } from "../../utils/utils";
+import ErrorAlert from "../../components/ErrorAllert";
+
 export default function CommitHistory() {
   const [arr, setArr] = useState([]);
   const [expandedProject, setExpandedProject] = useState(null);
   const navigate = useNavigate();
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     fetch(`${BackendURL}/get_projects_and_commits`, {
       method: "GET",
       credentials: "include", // Important for cookies
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
@@ -23,8 +29,7 @@ export default function CommitHistory() {
         setArr(data.projects);
       })
       .catch((error) => {
-        console.error("Error fetching projects and commits:", error);
-        alert("Failed to load project data. Please log in again.");
+        setErr(error.message);
       });
   }, []);
 
@@ -56,6 +61,11 @@ export default function CommitHistory() {
               Commit History
             </h2>
           </div>
+          {err && (
+            <div>
+              <ErrorAlert message={err} />
+            </div>
+          )}
 
           {Object.keys(arr).length === 0 ? (
             <p className="text-white text-center">Loading projects...</p>

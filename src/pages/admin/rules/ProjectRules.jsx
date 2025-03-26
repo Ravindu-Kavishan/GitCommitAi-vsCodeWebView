@@ -5,6 +5,7 @@ import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
 import Button from "../../../components/Button";
 import { BackendURL } from "../../../utils/utils";
+import ErrorAlert from "../../../components/ErrorAllert";
 
 export default function ProjectRules() {
   const [arr, setArr] = useState([]);
@@ -12,6 +13,7 @@ export default function ProjectRules() {
   const navigate = useNavigate();
   const admin = localStorage.getItem("admin") === "true";
   const [rule, setRule] = useState("");
+  const [err, setErr] = useState("");
 
   const [uri, setUri] = useState("");
 
@@ -32,14 +34,10 @@ export default function ProjectRules() {
     })
       .then(async (response) => {
         if (!response.ok) {
-          if (response.status === 401) {
-            throw new Error("Unauthorized: Please log in.");
-          } else if (response.status === 404) {
-            throw new Error("No projects found.");
-          } else if (response.status === 500) {
-            throw new Error("Server error. Try again later.");
-          }
-          throw new Error(`Error: ${response.status}`);
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
@@ -50,10 +48,7 @@ export default function ProjectRules() {
         setArr(data.projects);
       })
       .catch((error) => {
-        console.error("Error fetching projects and commits:", error);
-        alert(
-          error.message || "Failed to load project data. Please log in again."
-        );
+        setErr(error.errorMessage);
       });
   }, [uri]); // Re-run the effect when the 'uri' changes
 
@@ -70,14 +65,17 @@ export default function ProjectRules() {
       },
       body: JSON.stringify({ project_name: project_name }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete project.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload()) // Corrected the reload method
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.errorMessage));
   }
 
   function deleteRuleClicked(projectName, rule) {
@@ -91,14 +89,17 @@ export default function ProjectRules() {
         rule: rule,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete rule.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload()) // Refreshes page after successful deletion
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.errorMessage));
   }
 
   function addProjectclicked() {
@@ -115,14 +116,17 @@ export default function ProjectRules() {
         rule: rule,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to add rule.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
       .then(() => window.location.reload())
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.errorMessage));
   }
 
   // function addRuleClicked(projectName, rule) {
@@ -141,6 +145,11 @@ export default function ProjectRules() {
               Your Projects & Rules
             </h2>
           </div>
+          {err && (
+            <div>
+              <ErrorAlert message={err} />
+            </div>
+          )}
 
           {arr.length === 0 ? (
             <p className="text-white text-center">Loading projects...</p>

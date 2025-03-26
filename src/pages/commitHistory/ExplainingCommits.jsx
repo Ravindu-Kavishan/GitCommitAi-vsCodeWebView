@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SideBar from "../../components/SideBar";
 import { BackendURL } from "../../utils/utils";
+import ErrorAlert from "../../components/ErrorAllert";
 
 export default function ExplainingCommits() {
   const location = useLocation();
-  const { commitidx, projectidx, project_name, commit_message, git_diff } = location.state || {};
-
+  const { commitidx, projectidx, project_name, commit_message, git_diff } =
+    location.state || {};
+  const [err, setErr] = useState("");
   const [explanation, setExplanation] = useState("");
 
   useEffect(() => {
@@ -25,10 +27,10 @@ export default function ExplainingCommits() {
         if (response.ok) {
           setExplanation(data.commit_review);
         } else {
-          console.error("Error fetching explanation:", data.detail);
+          setErr("Error fetching explanation.");
         }
       } catch (error) {
-        console.error("Error fetching explanation:", error);
+        setErr("Error fetching explanation.");
       }
     }
 
@@ -48,6 +50,11 @@ export default function ExplainingCommits() {
                 Explaining Commits
               </h2>
             </div>
+            {err && (
+              <div>
+                <ErrorAlert message={err} />
+              </div>
+            )}
           </div>
           <div className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <div className="justify-between w-full">

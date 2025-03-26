@@ -4,13 +4,14 @@ import { Form, useNavigate } from "react-router";
 import Button from "../../../components/Button";
 import deleteIcon from "../../../images/delete.svg";
 import { BackendURL } from "../../../utils/utils";
+import ErrorAlert from "../../../components/ErrorAllert";
 
 export default function AddProjects() {
   const [inputs, setInputs] = useState({ rule: "", user: "" });
   const [projectName, setProjectName] = useState("");
   const [rules, setRules] = useState([""]);
   const [users, setUsers] = useState([""]);
-  const [form, setForm] = useState({ projectName: "", rules: [], users: [] });
+  const [err, setErr] = useState("");
 
   function addRulesclicked(id) {
     setRules((prevRules) =>
@@ -43,8 +44,7 @@ export default function AddProjects() {
   }
   function addUserclicked(id) {
     if (!isValidEmail(inputs.user)) {
-      console.error("Invalid email address");
-      alert("Please enter a valid email address.");
+      setErr("Please enter a valid email address.");
       return; // Prevent adding if invalid email
     }
     setUsers((prevUsers) =>
@@ -71,9 +71,12 @@ export default function AddProjects() {
         users: users.slice(0, -1), // Correct slicing
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error("Failed to add project.");
+          const errorData = await response.json().catch(() => null); // Handle non-JSON responses
+          const errorMessage = errorData?.message;
+          setErr("Failed to add project.");
+          throw new Error(errorMessage);
         }
         return response.json();
       })
@@ -84,7 +87,7 @@ export default function AddProjects() {
         setRules([""]);
         setUsers([""]);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => setErr(err.message));
   }
 
   return (
@@ -97,6 +100,11 @@ export default function AddProjects() {
           <div className="flex justify-center mb-6">
             <h2 className="text-white text-3xl font-semibold">Add Projects</h2>
           </div>
+          {err && (
+            <div>
+              <ErrorAlert message={err} />
+            </div>
+          )}
           <div className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <div className="flex items-center w-full">
               {/* Left-aligned Project Name */}
