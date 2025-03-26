@@ -8,9 +8,9 @@ import OTP from "./pages/auth/OTP";
 import ChangePassword from "./pages/auth/ChangePassword";
 import CommitHistory from "./pages/commitHistory/ComitHistory";
 import ExplainingCommits from "./pages/commitHistory/ExplainingCommits";
-import ProjectRules from "./pages/rules/ProjectRules";
-import AddProjects from "./pages/rules/AddProjects";
-import AddUsers from "./pages/addUsers/AddUsers";
+import ProjectRules from "./pages/admin/rules/ProjectRules";
+import AddProjects from "./pages/admin/rules/AddProjects";
+import AddUsers from "./pages/admin/addUsers/AddUsers";
 
 export default function App() {
   return (

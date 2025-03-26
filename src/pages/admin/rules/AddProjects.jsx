@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../../components/SideBar";
 import { Form, useNavigate } from "react-router";
-import Button from "../../components/Button";
-import deleteIcon from "../../images/delete.svg";
+import Button from "../../../components/Button";
+import deleteIcon from "../../../images/delete.svg";
 
 export default function AddProjects() {
   const [inputs, setInputs] = useState({ rule: "", user: "" });

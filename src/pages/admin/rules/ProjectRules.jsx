@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../components/SideBar";
-import arrow from "../../images/arrow.svg";
-import deleteicon from "../../images/delete.svg";
+import SideBar from "../../../components/SideBar";
+import arrow from "../../../images/arrow.svg";
+import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 
 export default function ProjectRules() {
   const [arr, setArr] = useState([]);

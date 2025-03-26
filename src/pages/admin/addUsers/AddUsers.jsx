@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../../components/SideBar";
-import arrow from "../../images/arrow.svg";
-import deleteicon from "../../images/delete.svg";
+import SideBar from "../../../components/SideBar";
+import arrow from "../../../images/arrow.svg";
+import deleteicon from "../../../images/delete.svg";
 import { useNavigate } from "react-router";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 
 export default function Projectuserss() {
   const [arr, setArr] = useState([]);
@@ -185,7 +185,7 @@ export default function Projectuserss() {
                                 src={deleteicon}
                                 alt="delete"
                                 onClick={() =>
-                                    deleteUserClicked(project.project_name, users)
+                                  deleteUserClicked(project.project_name, users)
                                 }
                                 className="cursor-pointer w-6 h-6"
                               />
@@ -209,7 +209,9 @@ export default function Projectuserss() {
                           </div>
                           <button
                             className="px-4 py-2 bg-white  text-blue-500 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-                            onClick={()=>{addUserClicked(project.project_name,useremail)}}
+                            onClick={() => {
+                              addUserClicked(project.project_name, useremail);
+                            }}
                           >
                             ADD
                           </button>
