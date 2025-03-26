@@ -22,6 +22,11 @@ export default function LogIn() {
       .then((response) => {
         if (response.status === 200) {
           // Navigate to CommitHistory on successful login
+          if(response.data.admin){
+            localStorage.setItem("admin", true);
+          }else{
+            localStorage.setItem("admin", false);
+          }
           navigate("/CommitHistory");
         }
       })
@@ -32,8 +37,7 @@ export default function LogIn() {
         );
         alert("Login failed. Please check your credentials.");
       });
-    }
-  
+  }
 
   function fpclicked(e) {
     e.preventDefault();

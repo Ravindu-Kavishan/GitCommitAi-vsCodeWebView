@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import SideBar from "../../components/SideBar";
 import arrow from "../../images/arrow.svg";
 import { useNavigate } from "react-router";
@@ -21,7 +20,6 @@ export default function CommitHistory() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setArr(data.projects);
       })
       .catch((error) => {
@@ -34,7 +32,7 @@ export default function CommitHistory() {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
-  function expandClicked(commitidx, projectidx, project_name, commit_message) {
+  function expandClicked(commitidx, projectidx, project_name, commit_message,git_diff) {
     navigate("/ExplainingCommits", {
       state: { commitidx, projectidx, project_name, commit_message,git_diff },
     });
@@ -100,7 +98,7 @@ export default function CommitHistory() {
                                   projectidx,
                                   project.project_name,
                                   commit.commit_message,
-                                  commit.git_diff
+                                  commit.git_diff // Add this properly
                                 )
                               }
                             >
