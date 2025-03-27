@@ -10,11 +10,20 @@ export default function CommitHistory() {
   const [expandedProject, setExpandedProject] = useState(null);
   const navigate = useNavigate();
   const [err, setErr] = useState("");
+  const stored_mail = localStorage.getItem("email");
+
 
   useEffect(() => {
     fetch(`${BackendURL}/get_projects_and_commits`, {
-      method: "GET",
-      credentials: "include", // Important for cookies
+      method: "POST",
+      credentials: "include", // Important for sending cookies with the request
+      headers: {
+        "Content-Type": "application/json", // Added content type for JSON body
+      },
+      body: JSON.stringify({
+        email: stored_mail,
+        
+      }),
     })
       .then(async (response) => {
         if (!response.ok) {

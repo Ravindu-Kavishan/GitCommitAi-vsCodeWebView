@@ -12,6 +12,7 @@ export default function ProjectRules() {
   const [expandedProject, setExpandedProject] = useState(null);
   const navigate = useNavigate();
   const admin = localStorage.getItem("admin") === "true";
+  const stored_mail = localStorage.getItem("email");
   const [rule, setRule] = useState("");
   const [err, setErr] = useState("");
   const [uri, setUri] = useState("");
@@ -26,8 +27,15 @@ export default function ProjectRules() {
 
   const fetchData = () => {
     fetch(uri, {
-      method: "GET",
+      method: "POST",
       credentials: "include", // Important for sending cookies with the request
+      headers: {
+        "Content-Type": "application/json", // Added content type for JSON body
+      },
+      body: JSON.stringify({
+        email: stored_mail,
+        
+      }),
     })
       .then(async (response) => {
         if (!response.ok) {

@@ -37,6 +37,8 @@ export default function LogIn() {
       } else {
         localStorage.setItem("admin", false);
       }
+      console.log(data.email);
+      localStorage.setItem("email", data.email);
 
       navigate("/ProjectsRules");
     } catch (error) {
