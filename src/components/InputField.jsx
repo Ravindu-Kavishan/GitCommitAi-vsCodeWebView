@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import eyeimg from "../images/eye.png";
-import eyeclosedimg from "../images/eye-closed.png";
+import eyeimg from "../images/eye.svg";
+import eyeclosedimg from "../images/eye-closed.svg";
 
 export default function InputField({
   placeholder,

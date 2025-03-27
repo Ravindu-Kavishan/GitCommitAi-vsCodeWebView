@@ -28,6 +28,7 @@ export default function App() {
           <Route path="/ExplainingCommits" element={<ExplainingCommits />} />
           <Route path="/AddProjects" element={<AddProjects />} />
           <Route path="/AddUsers" element={<AddUsers />} />
+          <Route path="*" element={<Welcome />} />
         </Routes>
       </BrowserRouter>
     </div>

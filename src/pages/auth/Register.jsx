@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import registerImage from "../../images/register.png";
+import registerImage from "../../images/register.svg";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import emailimg from "../../images/email.png";
-import userimg from "../../images/user.png";
-import passwordimg from "../../images/password.png";
+import emailimg from "../../images/email.svg";
+import userimg from "../../images/user.svg";
+import passwordimg from "../../images/password.svg";
 
 export default function Register() {
   const [newUser, setNewUser] = useState({

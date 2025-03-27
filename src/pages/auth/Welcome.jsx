@@ -1,5 +1,5 @@
 import React from "react";
-import welcomeImage from "../../images/welcome.png";
+import welcomeImage from "../../images/welcome.svg";
 import { useNavigate } from "react-router";
 import Button from "../../components/Button";
 import ContentImage from "../../components/ContentImage";

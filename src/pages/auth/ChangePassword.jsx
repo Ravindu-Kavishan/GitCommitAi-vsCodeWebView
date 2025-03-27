@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import loginImage from "../../images/login.png";
+import loginImage from "../../images/login.svg";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import passwordimg from "../../images/password.png";
+import passwordimg from "../../images/password.svg";
 import { useNavigate } from "react-router";
 
 export default function ChangePassword() {
