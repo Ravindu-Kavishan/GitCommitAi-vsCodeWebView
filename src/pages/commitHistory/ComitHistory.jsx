@@ -82,7 +82,7 @@ export default function CommitHistory() {
             <ul>
               {arr.map((project, projectidx) => (
                 <div
-                  className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out justify-between items-center"
+                  className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out justify-between items-center text-gray-800"
                   key={projectidx}
                 >
                   <div className="flex items-center justify-between w-full">
