@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import registerImage from "../../images/register.svg";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import emailimg from "../../images/email.svg";
-import userimg from "../../images/user.svg";
-import passwordimg from "../../images/password.svg";
 
 export default function Register() {
   const [newUser, setNewUser] = useState({
@@ -24,7 +20,7 @@ export default function Register() {
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-80 h-fit rounded-xl p-4 shadow-lg">
-        <ContentImage image={registerImage} title="Register" />
+        <ContentImage image="https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068437/register.svg" title="Register" />
         <div className="flex justify-center">
           <form className="w-full my-4">
 
@@ -34,7 +30,7 @@ export default function Register() {
               onChange={(e) =>
                 setNewUser({ ...newUser, userName: e.target.value })
               }
-              icon={userimg}
+              icon='https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068519/user.svg'
             />
 
 
@@ -44,7 +40,7 @@ export default function Register() {
               onChange={(e) =>
                 setNewUser({ ...newUser, email: e.target.value })
               }
-              icon={emailimg}
+              icon="https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743067852/email.svg"
             />
 
 
@@ -54,7 +50,7 @@ export default function Register() {
               onChange={(e) =>
                 setNewUser({ ...newUser, password: e.target.value })
               }
-              icon={passwordimg}
+              icon='https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068372/password.svg'
               type="password"
               isPassword={true}
             />
@@ -64,7 +60,7 @@ export default function Register() {
               onChange={(e) =>
                 setNewUser({ ...newUser, Confirmpassword: e.target.value })
               }
-              icon={passwordimg}
+              icon='https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068372/password.svg'
               type="password"
               isPassword={true}
             />

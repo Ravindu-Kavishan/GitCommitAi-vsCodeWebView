@@ -1,5 +1,4 @@
 import React from "react";
-import welcomeImage from "../../images/welcome.svg";
 import { useNavigate } from "react-router";
 import Button from "../../components/Button";
 import ContentImage from "../../components/ContentImage";
@@ -15,7 +14,10 @@ export default function Welcome() {
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-64 h-fit rounded-xl">
-        <ContentImage image={welcomeImage} title="Welcome"/>
+        <ContentImage
+          image="https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068585/welcome.svg"
+          title="Welcome"
+        />
         <div className="pb-4">
           <Button
             text="Register"

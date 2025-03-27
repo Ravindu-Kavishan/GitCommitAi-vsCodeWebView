@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import eyeimg from "../images/eye.svg";
-import eyeclosedimg from "../images/eye-closed.svg";
+
 
 export default function InputField({
   placeholder,
@@ -25,7 +24,7 @@ export default function InputField({
         />
         {isPassword && (
           <img
-            src={showPassword ? eyeclosedimg : eyeimg}
+            src={showPassword ? "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068059/eye-closed.svg" : "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068241/eye.svg"}
             className="w-4 ml-2 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
             alt="Toggle Password"

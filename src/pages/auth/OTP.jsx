@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import loginImage from "../../images/login.svg";
 import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import OTPimg from "../../images/otp.svg";
 import { useNavigate } from "react-router";
 
 export default function OTP() {
@@ -24,14 +22,17 @@ export default function OTP() {
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-72 h-fit rounded-xl p-4 shadow-lg">
-        <ContentImage image={loginImage} title="Type OTP" />
+        <ContentImage
+          image="https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743067731/login.svg"
+          title="Type OTP"
+        />
         <div className="flex justify-center">
           <form className="w-full my-2">
             <InputField
               placeholder="OTP"
               value={OTP}
               onChange={(e) => setOTP(e.target.value)}
-              icon={OTPimg}
+              icon='https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068293/otp.svg'
             />
 
             <Button
