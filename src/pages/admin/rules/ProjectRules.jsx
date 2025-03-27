@@ -157,7 +157,7 @@ export default function ProjectRules() {
             <ul>
               {arr.map((project, projectidx) => (
                 <div
-                  className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out justify-between items-center"
+                  className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out justify-between items-center text-gray-800"
                   key={projectidx}
                 >
                   <div className="flex items-center justify-between w-full">
@@ -218,7 +218,11 @@ export default function ProjectRules() {
                             <input
                               type="text"
                               placeholder="Type Rule"
-                              className="w-1/2 text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
+                              className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
+                              style={{
+                                outline: "none" /* Remove outline */,
+                                boxShadow: "none" /* Remove focus box shadow */,
+                              }}
                               value={rule}
                               onChange={(e) => {
                                 setRule(e.target.value);

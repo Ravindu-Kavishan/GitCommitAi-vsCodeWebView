@@ -157,7 +157,9 @@ export default function Projectuserss() {
                   key={projectidx}
                 >
                   <div className="flex items-center justify-between w-full">
-                    <h1 className="text-xl font-semibold">{projectidx + 1}</h1>
+                    <h1 className="text-xl font-semibold text-gray-800">
+                      {projectidx + 1}
+                    </h1>
                     <h1 className="ml-2 text-2xl font-semibold text-gray-800 text-center flex-1">
                       {project.project_name}
                     </h1>
@@ -218,7 +220,11 @@ export default function Projectuserss() {
                               onChange={(e) => {
                                 setUseremail(e.target.value);
                               }}
-                              className="w-1/2 text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
+                              className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
+                              style={{
+                                outline: "none" /* Remove outline */,
+                                boxShadow: "none" /* Remove focus box shadow */,
+                              }}
                             />
                           </div>
                           <button

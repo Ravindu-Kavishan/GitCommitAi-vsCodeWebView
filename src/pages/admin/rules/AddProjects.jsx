@@ -108,7 +108,9 @@ export default function AddProjects() {
           <div className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <div className="flex items-center w-full">
               {/* Left-aligned Project Name */}
-              <h1 className="text-xl font-semibold mr-4">Project Name:</h1>
+              <h1 className="text-xl font-semibold mr-4 text-gray-800">
+                Project Name:
+              </h1>
 
               {/* Input Field (next to Project Name) */}
               <input
@@ -118,7 +120,11 @@ export default function AddProjects() {
                 onChange={(e) => {
                   setProjectName(e.target.value);
                 }}
-                className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
+                className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
+                style={{
+                  outline: "none" /* Remove outline */,
+                  boxShadow: "none" /* Remove focus box shadow */,
+                }}
               />
             </div>
           </div>
@@ -126,7 +132,7 @@ export default function AddProjects() {
           {/* <form onSubmit={SubmitFunction}> */}
           {rules.map((rule, ruleId) => (
             <div
-              className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out text-gray-800"
               key={ruleId}
             >
               <div className="flex items-center w-full">
@@ -149,7 +155,11 @@ export default function AddProjects() {
                           )
                         )
                   }
-                  className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
+                  className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
+                  style={{
+                    outline: "none" /* Remove outline */,
+                    boxShadow: "none" /* Remove focus box shadow */,
+                  }}
                 />
                 {rule === "" ? (
                   <button
@@ -172,7 +182,7 @@ export default function AddProjects() {
 
           {users.map((user, userId) => (
             <div
-              className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              className="bg-[#D4B7FA] m-4 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out text-gray-800"
               key={userId}
             >
               <div className="flex items-center w-full">
@@ -195,7 +205,11 @@ export default function AddProjects() {
                           )
                         )
                   }
-                  className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold"
+                  className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
+                  style={{
+                    outline: "none" /* Remove outline */,
+                    boxShadow: "none" /* Remove focus box shadow */,
+                  }}
                 />
                 {user === "" ? (
                   <button

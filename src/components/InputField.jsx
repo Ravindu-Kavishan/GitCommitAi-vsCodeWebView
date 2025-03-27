@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 export default function InputField({
   placeholder,
   value,
@@ -21,10 +20,18 @@ export default function InputField({
           value={value}
           onChange={onChange}
           className="bg-transparent outline-none placeholder-[#7315E7] text-[#7315E7] w-full text-sm "
+          style={{
+            outline: "none" /* Remove outline */,
+            boxShadow: "none" /* Remove focus box shadow */,
+          }}
         />
         {isPassword && (
           <img
-            src={showPassword ? "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068059/eye-closed.svg" : "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068241/eye.svg"}
+            src={
+              showPassword
+                ? "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068059/eye-closed.svg"
+                : "https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743068241/eye.svg"
+            }
             className="w-4 ml-2 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
             alt="Toggle Password"
