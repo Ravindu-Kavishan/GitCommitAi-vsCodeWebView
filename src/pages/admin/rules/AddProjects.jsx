@@ -56,6 +56,7 @@ export default function AddProjects() {
       user: "",
     }));
   }
+  
   function SubmitFunction() {
     //   e.preventDefault();  // Prevents page refresh
     //   setForm({ projectName: projectName, rules: rules, users: users });
@@ -86,6 +87,7 @@ export default function AddProjects() {
         setProjectName("");
         setRules([""]);
         setUsers([""]);
+        setErr("");
       })
       .catch((err) => setErr(err.message));
   }

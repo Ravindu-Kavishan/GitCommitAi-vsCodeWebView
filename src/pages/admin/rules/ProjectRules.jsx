@@ -14,7 +14,6 @@ export default function ProjectRules() {
   const admin = localStorage.getItem("admin") === "true";
   const [rule, setRule] = useState("");
   const [err, setErr] = useState("");
-
   const [uri, setUri] = useState("");
 
   useEffect(() => {
@@ -25,9 +24,7 @@ export default function ProjectRules() {
     }
   }, []); // Dependency array ensures uri is updated when 'admin' changes
 
-  useEffect(() => {
-    if (!uri) return; // Prevent fetch if URI is not set yet
-
+  const fetchData = () => {
     fetch(uri, {
       method: "GET",
       credentials: "include", // Important for sending cookies with the request
@@ -36,7 +33,7 @@ export default function ProjectRules() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null); // Handle non-JSON responses
           const errorMessage = errorData?.message;
-          setErr("Failed to add project.");
+          setErr("Failed to fetch projects.");
           throw new Error(errorMessage);
         }
         return response.json();
@@ -48,16 +45,26 @@ export default function ProjectRules() {
         setArr(data.projects);
       })
       .catch((error) => {
-        setErr(error.errorMessage);
+        setErr(error.message);
       });
-  }, [uri]); // Re-run the effect when the 'uri' changes
+  };
+
+  useEffect(() => {
+    if (uri) fetchData();
+  }, [uri]); // Fetch data when the URI changes
+
+  const refreshData = () => {
+    setArr([]); // Clear the data array temporarily
+    setErr(""); // Reset any error state
+    setRule("");
+    fetchData(); // Re-fetch data after clearing
+  };
 
   function handleArrowClick(projectidx) {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
   function deleteProjectClicked(project_name) {
-    console.log(project_name);
     fetch(`${BackendURL}/delete_project`, {
       method: "DELETE",
       headers: {
@@ -69,13 +76,13 @@ export default function ProjectRules() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null); // Handle non-JSON responses
           const errorMessage = errorData?.message;
-          setErr("Failed to add project.");
+          setErr("Failed to delete project.");
           throw new Error(errorMessage);
         }
         return response.json();
       })
-      .then(() => window.location.reload()) // Corrected the reload method
-      .catch((err) => setErr(err.errorMessage));
+      .then(() => refreshData()) // Refresh data after successful deletion
+      .catch((err) => setErr(err.message));
   }
 
   function deleteRuleClicked(projectName, rule) {
@@ -93,18 +100,19 @@ export default function ProjectRules() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null); // Handle non-JSON responses
           const errorMessage = errorData?.message;
-          setErr("Failed to add project.");
+          setErr("Failed to delete rule.");
           throw new Error(errorMessage);
         }
         return response.json();
       })
-      .then(() => window.location.reload()) // Refreshes page after successful deletion
-      .catch((err) => setErr(err.errorMessage));
+      .then(() => refreshData()) // Refresh data after successful deletion
+      .catch((err) => setErr(err.message));
   }
 
   function addProjectclicked() {
     navigate("/AddProjects");
   }
+
   function addRuleClicked(projectName, rule) {
     fetch(`${BackendURL}/add_rule`, {
       method: "POST",
@@ -120,19 +128,15 @@ export default function ProjectRules() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null); // Handle non-JSON responses
           const errorMessage = errorData?.message;
-          setErr("Failed to add project.");
+          setErr("Failed to add rule.");
           throw new Error(errorMessage);
         }
         return response.json();
       })
-      .then(() => window.location.reload())
-      .catch((err) => setErr(err.errorMessage));
+      .then(() => refreshData()) // Refresh data after adding rule
+      .catch((err) => setErr(err.message));
   }
 
-  // function addRuleClicked(projectName, rule) {
-  // console.log(projectName)
-  // console.log(rule)
-  // }
   return (
     <div className="flex w-full min-h-screen">
       <div className="w-1/6 bg-gradient-to-br from-[#69A2AD] to-[#7315E7] border-r-3 border-[#858585] flex justify-center">
@@ -224,16 +228,14 @@ export default function ProjectRules() {
                                 boxShadow: "none" /* Remove focus box shadow */,
                               }}
                               value={rule}
-                              onChange={(e) => {
-                                setRule(e.target.value);
-                              }}
+                              onChange={(e) => setRule(e.target.value)}
                             />
                           </div>
                           <button
                             className="px-4 py-2 bg-white  text-blue-500 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-                            onClick={() => {
-                              addRuleClicked(project.project_name, rule);
-                            }}
+                            onClick={() =>
+                              addRuleClicked(project.project_name, rule)
+                            }
                           >
                             ADD
                           </button>

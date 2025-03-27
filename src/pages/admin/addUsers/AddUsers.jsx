@@ -15,7 +15,8 @@ export default function Projectuserss() {
   const [useremail, setUseremail] = useState("");
   const [err, setErr] = useState("");
 
-  useEffect(() => {
+  // Fetch data logic
+  const fetchData = () => {
     fetch(`${BackendURL}/get_projects_and_users`, {
       method: "GET",
       credentials: "include", // Important for cookies
@@ -40,19 +41,34 @@ export default function Projectuserss() {
         if (!data.projects || !Array.isArray(data.projects)) {
           throw new Error("Invalid data format received.");
         }
-        setArr(data.projects);
+        setArr(data.projects); // Set the new projects data
       })
       .catch((error) => {
-        setErr(error.message);
+        setErr(error.message); // Set error state
       });
+  };
+
+  // Initial fetch when the component mounts
+  useEffect(() => {
+    fetchData();
   }, []);
 
+  // Refresh data after successful add or delete operation
+  function refreshData() {
+    setArr([]); // Clear the data array temporarily
+    setErr(""); // Reset any error state
+    setUseremail("");
+    fetchData(); // Re-fetch data after clearing
+
+  }
+
+  // Handle expand/collapse logic for projects
   function handleArrowClick(projectidx) {
     setExpandedProject(expandedProject === projectidx ? null : projectidx);
   }
 
+  // Delete project
   function deleteProjectClicked(project_name) {
-    console.log(project_name);
     fetch(`${BackendURL}/delete_project`, {
       method: "DELETE",
       headers: {
@@ -64,23 +80,27 @@ export default function Projectuserss() {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null); // Handle non-JSON responses
           const errorMessage = errorData?.message;
-          setErr("Failed to add project.");
+          setErr("Failed to delete project.");
           throw new Error(errorMessage);
         }
         return response.json();
       })
-      .then(() => window.location.reload()) // Corrected the reload method
+      .then(() => refreshData()) // Refresh after successful delete
       .catch((err) => setErr(err.message));
   }
 
+  // Add project clicked
   function addProjectclicked() {
     navigate("/AddProjects");
   }
 
+  // Email validation
   function isValidEmail(email) {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
   }
+
+  // Add user to project
   function addUserClicked(projectName, user) {
     if (!isValidEmail(useremail)) {
       setErr("Please enter a valid email address.");
@@ -104,10 +124,11 @@ export default function Projectuserss() {
         }
         return response.json();
       })
-      .then(() => window.location.reload())
+      .then(() => refreshData()) // Refresh after successful add
       .catch((err) => setErr(err.message));
   }
 
+  // Delete user from project
   function deleteUserClicked(projectName, user) {
     fetch(`${BackendURL}/delete_user`, {
       method: "DELETE",
@@ -127,8 +148,8 @@ export default function Projectuserss() {
         }
         return response.json();
       })
-      .then(() => window.location.reload()) // Refreshes page after successful deletion
-      .catch((err) => setErr(err.errorMessage));
+      .then(() => refreshData()) // Refresh after successful user deletion
+      .catch((err) => setErr(err.message));
   }
 
   return (
@@ -222,8 +243,8 @@ export default function Projectuserss() {
                               }}
                               className="flex-grow text-center text-lg bg-transparent border-none outline-none placeholder-gray-500 font-bold text-gray-800"
                               style={{
-                                outline: "none" /* Remove outline */,
-                                boxShadow: "none" /* Remove focus box shadow */,
+                                outline: "none",
+                                boxShadow: "none",
                               }}
                             />
                           </div>
