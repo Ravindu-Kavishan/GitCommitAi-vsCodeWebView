@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/auth/Register";
 import Welcome from "./pages/auth/Welcome";
-import LogIn from "./pages/auth/LogIn";
 import ForgetPassword from "./pages/auth/FogetPassword";
 import OTP from "./pages/auth/OTP";
 import ChangePassword from "./pages/auth/ChangePassword";
@@ -12,14 +10,18 @@ import ProjectRules from "./pages/admin/rules/ProjectRules";
 import AddProjects from "./pages/admin/rules/AddProjects";
 import AddUsers from "./pages/admin/addUsers/AddUsers";
 
+import UserRegister from "./pages/UserRegister";
+import UserProfile from "./pages/UserProfile";
+import UserLogin from "./pages/UserLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import { Navigate } from "react-router-dom";
+
 export default function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/OTP" element={<OTP />} />
           <Route path="/ChangePassword" element={<ChangePassword />} />
@@ -29,6 +31,19 @@ export default function App() {
           <Route path="/AddProjects" element={<AddProjects />} />
           <Route path="/AddUsers" element={<AddUsers />} />
           <Route path="*" element={<Welcome />} />
+          <Route path="/userRegister" element={<UserRegister />} />
+          <Route path="/userProfile/:userId" element={<UserProfile />} />
+          <Route path="/userLogin" element={<UserLogin />} />
+          <Route
+            path="/adminDashboard"
+            element={
+              localStorage.getItem("role") === "admin" ? (
+                <AdminDashboard />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

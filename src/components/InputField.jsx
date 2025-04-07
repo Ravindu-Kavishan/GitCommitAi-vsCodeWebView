@@ -10,10 +10,19 @@ export default function InputField({
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
+  const renderIcon = () => {
+    if (!icon) return null;
+    if (typeof icon === "string") {
+      return <img src={icon} className="w-4 mr-2 self-center" alt="icon" />;
+    } else {
+      return <span className="mr-2 self-center text-[#7315E7] text-sm">{icon}</span>;
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <div className="rounded-4xl bg-[#D4B7FA] w-11/12 flex items-center px-3 mb-2 py-1 border-2 border-transparent hover:border-black transition duration-300">
-        <img src={icon} className="w-4 mr-2 self-center" />
+        {renderIcon()}
         <input
           type={isPassword ? (showPassword ? "text" : "password") : type}
           placeholder={placeholder}
@@ -24,6 +33,7 @@ export default function InputField({
             outline: "none" /* Remove outline */,
             boxShadow: "none" /* Remove focus box shadow */,
           }}
+
         />
         {isPassword && (
           <img
