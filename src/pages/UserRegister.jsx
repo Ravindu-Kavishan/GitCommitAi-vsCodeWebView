@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers, addUser } from "../services/UserServices";
 import { FaEnvelope, FaUser, FaLock, FaPhoneAlt } from "react-icons/fa";
-import robotImage from "../images/register.png";
+import robotImage from "../images/register.svg";
 import { useNavigate } from "react-router-dom";
 
 const UserRegister = () => {

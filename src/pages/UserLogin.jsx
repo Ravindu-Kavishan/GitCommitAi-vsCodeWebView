@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
-import loginImage from "../images/login.png";
 import { loginUser } from "../services/UserServices";
 import InputField from "../components/InputField";
 
@@ -41,7 +40,7 @@ const UserLogin = () => {
 
         {/* Robot Image */}
         <div className="flex justify-center mb-6">
-          <img src={loginImage} alt="Robot" className="w-40" />
+          <img src={"https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743067731/login.svg"} alt="Robot" className="w-40" />
         </div>
 
         {/* Input Fields using InputField component */}
