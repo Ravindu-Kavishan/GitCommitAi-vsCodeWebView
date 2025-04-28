@@ -3,6 +3,7 @@ import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import { useNavigate } from "react-router";
+import { BackendURL } from "../../utils/utils";
 
 export default function LogIn() {
   const navigate = useNavigate();

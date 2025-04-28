@@ -15,6 +15,7 @@ const UserLogin = () => {
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("role", data.role);
+      localStorage.setItem("email", data.email);
 
       console.log("Login successful:", data);
       if (data.role === "admin") {
