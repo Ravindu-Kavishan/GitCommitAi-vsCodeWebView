@@ -5,11 +5,13 @@ import { loginUser } from "../services/UserServices";
 import InputField from "../components/InputField";
 import ContentImage from "../components/ContentImage";
 import Button from "../components/Button";
+import ErrorAlert from "../components/ErrorAllert";
 
 const UserLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [err, setErr] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ const UserLogin = () => {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Invalid username or password");
+      setErr("Invalid username or password");
     }
   };
 
@@ -94,6 +96,11 @@ const UserLogin = () => {
   return (
     <div className="w-full h-screen bg-gradient-to-br from-[#69A2AD] to-[#7315E7] flex justify-center items-center">
       <div className="bg-white w-72 h-fit rounded-xl p-4 shadow-lg">
+        {err && (
+          <div>
+            <ErrorAlert message={err} />
+          </div>
+        )}
         <ContentImage
           image="https://res.cloudinary.com/dkyv6zp0a/image/upload/v1743067731/login.svg"
           title="LogIn"
