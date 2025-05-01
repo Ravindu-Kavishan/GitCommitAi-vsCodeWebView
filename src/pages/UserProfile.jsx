@@ -3,9 +3,13 @@ import SideBar from "../components/SideBar";
 import { getUserById, updateUser } from "../services/UserServices";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAllert";
+import SuccessMSG from "../components/SuccessMSG";
 
 const UserProfile = () => {
   const { userId } = useParams();
+  const [err, setErr] = useState("");
+  const [smsg, setSmsg] = useState("");
 
   const [user, setUser] = useState({
     username: "",
@@ -42,22 +46,25 @@ const UserProfile = () => {
 
       // Get the token from localStorage
       const token = localStorage.getItem("access_token");
-      console.log("Token:", token);
 
       if (!token) {
-        alert("User is not authenticated");
+        setSmsg("");
+        setErr("User is not authenticated");
         return;
       }
 
       // ✅ Pass token to service function
       const response = await updateUser(userId, updatedUser, token);
       if (response) {
-        alert("User updated successfully!");
+
+        setErr("");
+        setSmsg("User updated successfully!");
+
         setIsEditable(false);
       }
     } catch (error) {
-      console.error("Error updating user:", error);
-      alert("Failed to update user. Please check the input and try again.");
+      setSmsg("");
+      setErr("Failed to update user. Please check the input and try again.");
     }
   };
 
@@ -69,6 +76,16 @@ const UserProfile = () => {
 
       <div className="w-5/6 bg-gradient-to-br from-[#7315E7] to-[#69A2AD] flex justify-center items-center">
         <div className="bg-white p-8 rounded-2xl shadow-2xl w-3/5">
+          {err && (
+            <div>
+              <ErrorAlert message={err} />
+            </div>
+          )}
+          {smsg && (
+            <div>
+              <SuccessMSG message={smsg} />
+            </div>
+          )}
           <div className="flex justify-center mb-6">
             <FaUserCircle className="text-6xl text-purple-500" />
           </div>

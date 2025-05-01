@@ -10,7 +10,6 @@ import ProjectRules from "./pages/admin/rules/ProjectRules";
 import AddProjects from "./pages/admin/rules/AddProjects";
 import AddUsers from "./pages/admin/addUsers/AddUsers";
 
-
 import UserRegister from "./pages/UserRegister";
 import UserProfile from "./pages/UserProfile";
 import UserLogin from "./pages/UserLogin";
@@ -35,16 +34,7 @@ export default function App() {
           <Route path="/userRegister" element={<UserRegister />} />
           <Route path="/userProfile/:userId" element={<UserProfile />} />
           <Route path="/userLogin" element={<UserLogin />} />
-          <Route
-            path="/adminDashboard"
-            element={
-              localStorage.getItem("role") === "admin" ? (
-                <AdminDashboard />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
         </Routes>
       </BrowserRouter>
     </div>
