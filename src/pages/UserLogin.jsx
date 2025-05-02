@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaLock } from "react-icons/fa";
 import { loginUser } from "../services/UserServices";
 import InputField from "../components/InputField";
 import ContentImage from "../components/ContentImage";
 import Button from "../components/Button";
 import ErrorAlert from "../components/ErrorAllert";
 
+
+const vscode = window.vscode;
+
 const UserLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    if (!window.vscode) {
+      console.log("good");
+      window.vscode = acquireVsCodeApi();
+      vscode = window.vscode;
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,8 +31,9 @@ const UserLogin = () => {
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("role", data.role);
       localStorage.setItem("email", data.email);
+      vscode.postMessage({ command: "logedInFromWebView", email: data.email });
 
-      console.log("Login successful:", data);
+      // webviewView.webview.postMessage({command: "logedInFromWebView",email: data.email});
       if (data.role === "admin") {
         localStorage.setItem("admin", "true");
         navigate("/adminDashboard");

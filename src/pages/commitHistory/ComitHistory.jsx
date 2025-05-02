@@ -16,9 +16,9 @@ export default function CommitHistory() {
   useEffect(() => {
     fetch(`${BackendURL}/get_projects_and_commits`, {
       method: "POST",
-      credentials: "include", // Important for sending cookies with the request
+      credentials: "include", 
       headers: {
-        "Content-Type": "application/json", // Added content type for JSON body
+        "Content-Type": "application/json", 
       },
       body: JSON.stringify({
         email: stored_mail,
