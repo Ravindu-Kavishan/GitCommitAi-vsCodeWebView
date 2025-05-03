@@ -3,24 +3,28 @@ import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import { useNavigate } from "react-router";
+import BackButton from "../../components/BackButton";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
   async function sendOTPClicked(e) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/forgot-password", {
-        method: "POST",
-        credentials: "include", // Important for sending cookies
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }), // Sending only email
-      });
+      const response = await fetch(
+        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/forgot-password",
+        {
+          method: "POST",
+          credentials: "include", // Important for sending cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }), // Sending only email
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -28,7 +32,7 @@ export default function ForgetPassword() {
       }
 
       console.log("OTP sent successfully!");
-      
+
       // Store email in localStorage
       localStorage.setItem("email", email);
 
@@ -36,7 +40,6 @@ export default function ForgetPassword() {
     } catch (error) {
       console.error("Error:", error.message);
       setError("Failed to send OTP. Please try again.");
-
     }
   }
 
@@ -49,7 +52,7 @@ export default function ForgetPassword() {
         />
         <div className="flex justify-center">
           <form className="w-full my-2">
-          {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+            {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
             <InputField
               placeholder="Email"
               value={email}
@@ -65,6 +68,7 @@ export default function ForgetPassword() {
             />
           </form>
         </div>
+        <BackButton backpath="/userLogin" />
       </div>
     </div>
   );

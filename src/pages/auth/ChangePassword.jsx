@@ -3,6 +3,7 @@ import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import { useNavigate } from "react-router";
+import BackButton from "../../components/BackButton";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -29,16 +30,19 @@ export default function ChangePassword() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email, // Add email to the request body
-          new_password: passwords.password,
-        }),
-      });
+      const response = await fetch(
+        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/change-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email, // Add email to the request body
+            new_password: passwords.password,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -85,9 +89,15 @@ export default function ChangePassword() {
               isPassword={true}
             />
 
-            <Button text="Submit" color="#710AF1" tcolor="#D4B7FA" onClick={submitClicked} />
+            <Button
+              text="Submit"
+              color="#710AF1"
+              tcolor="#D4B7FA"
+              onClick={submitClicked}
+            />
           </form>
         </div>
+        <BackButton backpath="/OTP" />
       </div>
     </div>
   );

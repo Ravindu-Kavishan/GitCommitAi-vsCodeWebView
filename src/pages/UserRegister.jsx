@@ -7,6 +7,7 @@ import ContentImage from "../components/ContentImage";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import ErrorAlert from "../components/ErrorAllert";
+import BackButton from "../components/BackButton";
 
 const UserRegister = () => {
   const [users, setUsers] = useState([]);
@@ -52,7 +53,6 @@ const UserRegister = () => {
     if (!validateContact(contact)) {
       setErrors("Please enter a valid contact number (10 digits).");
       return;
-
     }
 
     // Validate password
@@ -62,9 +62,8 @@ const UserRegister = () => {
 
     // Validate password match
     if (password !== confirmPassword) {
-      setErrors("Passwords do not match.")
+      setErrors("Passwords do not match.");
       return;
-
     }
 
     try {
@@ -237,6 +236,7 @@ const UserRegister = () => {
             />
           </form>
         </div>
+        <BackButton backpath="/" />
       </div>
     </div>
   );

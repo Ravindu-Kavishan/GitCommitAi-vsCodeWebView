@@ -3,6 +3,8 @@ import ContentImage from "../../components/ContentImage";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import { useNavigate } from "react-router";
+import BackButton from "../../components/BackButton";
+
 
 export default function OTP() {
   const navigate = useNavigate();
@@ -20,14 +22,17 @@ export default function OTP() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/verify-otp", {
-        method: "POST",
-        credentials: "include", // Important for cookies/authentication
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: storedEmail, otp: OTP }), // Send email + OTP
-      });
+      const response = await fetch(
+        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/verify-otp",
+        {
+          method: "POST",
+          credentials: "include", // Important for cookies/authentication
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: storedEmail, otp: OTP }), // Send email + OTP
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -121,6 +126,7 @@ export default function OTP() {
             />
           </form>
         </div>
+        <BackButton backpath="/forgetpassword" />
       </div>
     </div>
   );

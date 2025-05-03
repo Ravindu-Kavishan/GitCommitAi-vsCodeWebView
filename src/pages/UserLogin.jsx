@@ -5,7 +5,7 @@ import InputField from "../components/InputField";
 import ContentImage from "../components/ContentImage";
 import Button from "../components/Button";
 import ErrorAlert from "../components/ErrorAllert";
-
+import BackButton from "../components/BackButton";
 
 const vscode = window.vscode;
 
@@ -15,13 +15,12 @@ const UserLogin = () => {
   const navigate = useNavigate();
   const [err, setErr] = useState("");
 
-  useEffect(() => {
-    if (!window.vscode) {
-      console.log("good");
-      window.vscode = acquireVsCodeApi();
-      vscode = window.vscode;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.vscode) {
+  //     window.vscode = acquireVsCodeApi();
+  //     vscode = window.vscode;
+  //   }
+  // }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -148,6 +147,7 @@ const UserLogin = () => {
             />
           </form>
         </div>
+        <BackButton backpath="/"/>
       </div>
     </div>
   );

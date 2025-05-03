@@ -16,7 +16,7 @@ export default function LogIn() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/login", {
+      const response = await fetch("http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/login", {
         method: "POST",
         credentials: "include", // Important for sending cookies
         headers: {
