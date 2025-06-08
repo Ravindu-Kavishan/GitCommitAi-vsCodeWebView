@@ -23,10 +23,9 @@ export default function OTP() {
 
     try {
       const response = await fetch(
-        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/verify-otp",
+        "http://192.168.8.105:8000/verify-otp",
         {
           method: "POST",
-          credentials: "include", // Important for cookies/authentication
           headers: {
             "Content-Type": "application/json",
           },
@@ -57,9 +56,8 @@ export default function OTP() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/forgot-password", {
+      const response = await fetch("http://192.168.8.105:8000/forgot-password", {
         method: "POST",
-        credentials: "include", // Important for cookies/authentication
         headers: {
           "Content-Type": "application/json",
         },

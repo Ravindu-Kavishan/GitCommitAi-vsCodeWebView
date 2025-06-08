@@ -16,9 +16,8 @@ export default function LogIn() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/login", {
+      const response = await fetch("http://192.168.8.105:8000/login", {
         method: "POST",
-        credentials: "include", // Important for sending cookies
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,7 +43,6 @@ export default function LogIn() {
       navigate("/ProjectsRules");
     } catch (error) {
       console.error("Login failed:", error.message);
-      // alert("Login failed. Please check your credentials.");
     }
   }
 

@@ -15,10 +15,9 @@ export default function ForgetPassword() {
 
     try {
       const response = await fetch(
-        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/forgot-password",
+        "http://192.168.8.105:8000/forgot-password",
         {
           method: "POST",
-          credentials: "include", // Important for sending cookies
           headers: {
             "Content-Type": "application/json",
           },

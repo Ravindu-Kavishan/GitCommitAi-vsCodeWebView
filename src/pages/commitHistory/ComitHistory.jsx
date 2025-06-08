@@ -15,8 +15,7 @@ export default function CommitHistory() {
 
   useEffect(() => {
     fetch(`${BackendURL}/get_projects_and_commits`, {
-      method: "POST",
-      credentials: "include", 
+      method: "POST", 
       headers: {
         "Content-Type": "application/json", 
       },

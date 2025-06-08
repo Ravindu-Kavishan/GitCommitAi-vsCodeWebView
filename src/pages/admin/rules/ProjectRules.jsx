@@ -28,7 +28,6 @@ export default function ProjectRules() {
   const fetchData = () => {
     fetch(uri, {
       method: "POST",
-      credentials: "include", // Important for sending cookies with the request
       headers: {
         "Content-Type": "application/json", // Added content type for JSON body
       },

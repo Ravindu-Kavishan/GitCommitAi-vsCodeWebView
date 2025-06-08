@@ -19,7 +19,6 @@ export default function Projectuserss() {
   const fetchData = () => {
     fetch(`${BackendURL}/get_projects_and_users`, {
       method: "GET",
-      credentials: "include", // Important for cookies
     })
       .then(async (response) => {
         if (!response.ok) {

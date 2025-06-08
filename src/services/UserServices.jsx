@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL = "http://127.0.0.1:8000";
-const API_URL = "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net";
+const API_URL = "http://192.168.8.105:8000";
 
 export const getUsers = async () => {
   try {

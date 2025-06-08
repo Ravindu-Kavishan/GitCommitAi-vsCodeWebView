@@ -31,7 +31,7 @@ export default function ChangePassword() {
 
     try {
       const response = await fetch(
-        "http://smartcommitai-backend-cdf5hgekexgxh2en.centralindia-01.azurewebsites.net/change-password",
+        "http://192.168.8.105:8000/change-password",
         {
           method: "POST",
           headers: {
