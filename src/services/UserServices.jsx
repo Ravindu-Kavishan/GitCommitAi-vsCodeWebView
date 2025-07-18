@@ -1,7 +1,8 @@
 import axios from "axios";
 
+const API_URL = "https://gitcommitai-backend-aafdg3cwdtctc9e6.centralindia-01.azurewebsites.net/";
 // const API_URL = "http://127.0.0.1:8000";
-const API_URL = "http://192.168.8.105:8000";
+// const API_URL = "http://192.168.8.105:8000";
 
 export const getUsers = async () => {
   try {
@@ -33,9 +34,9 @@ export const updateUser = async (userId, updatedUser, token) => {
       "Content-Type": "application/json",
     },
   });
-
   return response.data;
 };
+
 
 export const loginUser = async (username, password) => {
   try {

@@ -223,9 +223,6 @@ export default function ProjectRules() {
                         ))}
                         {admin && (
                         <div className="flex bg-white p-4 m-2 rounded-lg justify-between items-center shadow-sm hover:shadow-lg ease-in-out">
-                          <h1 className="mr-4 text-lg font-semibold text-gray-600">
-                            1
-                          </h1>
                           <div className="flex items-center justify-center w-full">
                             <input
                               type="text"

@@ -229,13 +229,10 @@ export default function Projectuserss() {
                           </div>
                         ))}
                         <div className="flex bg-white p-4 m-2 rounded-lg justify-between items-center shadow-sm hover:shadow-lg ease-in-out">
-                          <h1 className="mr-4 text-lg font-semibold text-gray-600">
-                            1
-                          </h1>
                           <div className="flex items-center justify-center w-full">
                             <input
                               type="text"
-                              placeholder="Type users"
+                              placeholder="Type the user's email."
                               value={useremail}
                               onChange={(e) => {
                                 setUseremail(e.target.value);
@@ -263,7 +260,7 @@ export default function Projectuserss() {
               ))}
               {admin && (
                 <Button
-                  text="AddProject"
+                  text="Add Project"
                   color="#710AF1"
                   tcolor="black"
                   onClick={addProjectclicked}

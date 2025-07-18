@@ -30,7 +30,7 @@ const UserLogin = () => {
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("role", data.role);
       localStorage.setItem("email", data.email);
-      vscode.postMessage({ command: "logedInFromWebView", email: data.email });
+      // vscode.postMessage({ command: "logedInFromWebView", email: data.email });
 
       // webviewView.webview.postMessage({command: "logedInFromWebView",email: data.email});
       if (data.role === "admin") {
