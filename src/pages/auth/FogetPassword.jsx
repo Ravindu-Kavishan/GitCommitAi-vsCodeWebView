@@ -15,7 +15,7 @@ export default function ForgetPassword() {
 
     try {
       const response = await fetch(
-        "https://gitcommitai-backend-aafdg3cwdtctc9e6.centralindia-01.azurewebsites.net/forgot-password",
+        "http://192.168.8.105:8000/forgot-password",
         {
           method: "POST",
           headers: {
